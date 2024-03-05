@@ -1,0 +1,40 @@
+@import url("fonts.css");
+
+body {
+    color: #D9D9D9;
+    background-color: rgb(50, 50, 50);
+    font-family: "CambriaMath";
+    user-select: none;
+}
+
+.money-icon {
+    width: 64px;
+    aspect-ratio: 1 / 1;
+}
+
+.authority-icon {
+    position: fixed;
+    left: 15px;
+    width: 48px;
+    aspect-ratio: 1 / 1;
+}
+
+#money-label {
+    position: fixed;
+    top: 9px;
+    left: 75px;
+    font-size: 48px;
+}
+
+#authority-label {
+    position: fixed;
+    top: 72px;
+    left: 75px;
+    font-size: 48px;
+}
+
+#version {
+    position: fixed;
+    top: 94%;
+    font-size: 32px;
+}
