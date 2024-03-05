@@ -60,6 +60,13 @@ body {
     font-size: 48px;
 }
 
+#day-count {
+    position: fixed;
+    left: 44.5%;
+    top: 0%;
+    font-size: 64px;
+}
+
 #fault {
     position: fixed;
     left: 150px;

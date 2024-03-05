@@ -6,7 +6,7 @@ const project = {
 function notification(text, duration) {
     const txt = document.getElementById("notification-text");
     const bor = document.getElementById("notification-border");
-    bor.style.top = "5%";
+    bor.style.top = "10%";
     txt.innerHTML = text;
 
     setTimeout(() => {
@@ -33,7 +33,7 @@ function createParticle(x, y, lifetime) {
     document.body.appendChild(particle);
 
     const intervalId = setInterval(() => {
-        opacity -= 0.0125;
+        opacity -= 0.0155;
         if (rotateClockwise) {
             rotation += 1;
         } else {
@@ -59,6 +59,9 @@ function confirmAll() {
     if (localStorage.getItem(`${project.id}_money`) === null) {
         localStorage.setItem(`${project.id}_money`, "0");
     }
+    if (localStorage.getItem(`${project.id}_day`) === null) {
+        localStorage.setItem(`${project.id}_day`, 0);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -68,6 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const voteLabel = document.getElementById("vote-label");
     const versLabel = document.getElementById("version");
     const voteIcon = document.getElementById("vote-icon");
+    const dayLabel = document.getElementById("day-count");
     
     const fault = document.getElementById("fault");
 
@@ -97,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
             localStorage.setItem(`${project.id}_auth`, parseInt(localStorage.getItem(`${project.id}_auth`), 10) + addition / 3.5)
         }
 
-        if (localStorage.getItem(`${project.id}_vote`) > 100) {
+        if (localStorage.getItem(`${project.id}_vote`) > 99) {
             
         } else {
             localStorage.setItem(`${project.id}_vote`, parseInt(localStorage.getItem(`${project.id}_vote`), 10) + addition / 5);
@@ -105,6 +109,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
         localStorage.setItem(`${project.id}_money`, (parseInt(localStorage.getItem(`${project.id}_money`), 10) + addition).toString());
     });
+
+    function day() {
+        let d = localStorage.getItem(`${project.id}_day`);
+        localStorage.setItem(`${project.id}_day`, parseInt(d) + 1);
+
+        setTimeout(() => {
+            day();
+        }, 2000);
+    }
 
     function chuck_down() {
         if (localStorage.getItem(`${project.id}_auth`) < 25) {
@@ -139,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
         moneyLabel.innerHTML = parseInt(localStorage.getItem(`${project.id}_money`), 10);
         authLabel.innerHTML = parseInt(localStorage.getItem(`${project.id}_auth`), 10) + "%";
         voteLabel.innerHTML = parseInt(localStorage.getItem(`${project.id}_vote`), 10) + "%";
+        dayLabel.innerHTML = "DAY " + parseInt(localStorage.getItem(`${project.id}_day`));
 
         if (localStorage.getItem(`${project.id}_auth`) < 25) {
             if (parseInt(localStorage.getItem(`${project.id}_money`), 10) > decreation) {
@@ -192,6 +206,7 @@ document.addEventListener("DOMContentLoaded", function() {
         setTimeout(refresh, 50);
     }    
 
+    day();
     chuck_down();
     refresh();
 });
