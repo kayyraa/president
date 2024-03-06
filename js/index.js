@@ -1,6 +1,6 @@
 const project = {
     id: "563441",
-    v: "v3.1.5"
+    v: "v4.7.6 / HTML Runtime"
 };
 
 function notification(text, duration) {
@@ -47,20 +47,22 @@ function createParticle(x, y, lifetime) {
             particle.style.opacity = opacity;
         }
     }, lifetime);
-};
+}
 
 function confirmAll() {
-    if (localStorage.getItem(`${project.id}_vote`) === null) {
-        localStorage.setItem(`${project.id}_vote`, "0");
-    }
-    if (localStorage.getItem(`${project.id}_auth`) === null) {
-        localStorage.setItem(`${project.id}_auth`, "100");
-    }
-    if (localStorage.getItem(`${project.id}_money`) === null) {
-        localStorage.setItem(`${project.id}_money`, "0");
-    }
-    if (localStorage.getItem(`${project.id}_day`) === null) {
-        localStorage.setItem(`${project.id}_day`, 0);
+    const defaultValues = {
+        "563441_vote": "0",
+        "563441_auth": "100",
+        "563441_money": "0",
+        "563441_day": "0",
+        "563441_png": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/National_Socialist_swastika_%28framed_in_red%29.svg/220px-National_Socialist_swastika_%28framed_in_red%29.svg.png",
+        "563441_pnm": "Nazi Party"
+    };
+
+    for (const key in defaultValues) {
+        if (localStorage.getItem(key) === null) {
+            localStorage.setItem(key, defaultValues[key]);
+        }
     }
 }
 
@@ -95,15 +97,11 @@ document.addEventListener("DOMContentLoaded", function() {
         let y = e.clientY;
         createParticle(x, y, 25)
 
-        if (localStorage.getItem(`${project.id}_auth`) > 100) {
-            
-        } else {
+        if (localStorage.getItem(`${project.id}_auth`) <= 100) {
             localStorage.setItem(`${project.id}_auth`, parseInt(localStorage.getItem(`${project.id}_auth`), 10) + addition / 3.5)
         }
 
-        if (localStorage.getItem(`${project.id}_vote`) > 99) {
-            
-        } else {
+        if (localStorage.getItem(`${project.id}_vote`) <= 99) {
             localStorage.setItem(`${project.id}_vote`, parseInt(localStorage.getItem(`${project.id}_vote`), 10) + addition / 5);
         }
 
@@ -122,25 +120,19 @@ document.addEventListener("DOMContentLoaded", function() {
     function chuck_down() {
         if (localStorage.getItem(`${project.id}_auth`) < 25) {
             if (parseInt(localStorage.getItem(`${project.id}_money`), 10) > decreation) {
-                localStorage.setItem(`${project.id}_money`, localStorage.getItem(`${project.id}_money`) - decreation);
+                localStorage.setItem(`${project.id}_money`, parseInt(localStorage.getItem(`${project.id}_money`), 10) - decreation);
                 fault.src = "./images/down.svg";
             }
         } else {
             fault.src = "./images/up.svg";
         }
 
-        if (localStorage.getItem(`${project.id}_auth`) < 0) {
-
-        } else if (localStorage.getItem(`${project.id}_auth`) > 0) {
-            localStorage.setItem(`${project.id}_auth`, localStorage.getItem(`${project.id}_auth`) - 0.75)
-        } else if (localStorage.getItem(`${project.id}_auth`) > 5) {
-            localStorage.setItem(`${project.id}_auth`, localStorage.getItem(`${project.id}_auth`) - 0.125)
+        if (localStorage.getItem(`${project.id}_auth`) > 0) {
+            localStorage.setItem(`${project.id}_auth`, Math.max(0, parseFloat(localStorage.getItem(`${project.id}_auth`)) - 0.75));
         }
 
-        if (localStorage.getItem(`${project.id}_vote`) < 0) {
-
-        } else if (localStorage.getItem(`${project.id}_vote`) > 0) {
-            localStorage.setItem(`${project.id}_vote`, localStorage.getItem(`${project.id}_vote`) - 1)
+        if (localStorage.getItem(`${project.id}_vote`) > 0) {
+            localStorage.setItem(`${project.id}_vote`, Math.max(0, parseFloat(localStorage.getItem(`${project.id}_vote`)) - 1));
         }
 
         setTimeout(() => {
@@ -182,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
             voteIcon.src = "./images/vote.svg";
             voteLabel.style.color = "#D9D9D9";
             if (actions.saved == false) {
-                notification("The Party Is Saved!", 3500);
+                notification("The Party Saved!", 3500);
                 actions.saved = true;
             }
         } else if (parseInt(localStorage.getItem(`${project.id}_vote`)) < 25) {
