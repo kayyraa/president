@@ -1,6 +1,6 @@
 const project = {
     id: "563441",
-    v: "v4.7.6 / HTML Runtime"
+    v: "v4.7.6 Latest"
 };
 
 function notification(text, duration) {
