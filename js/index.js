@@ -1,6 +1,6 @@
 const project = {
     id: "563441",
-    v: "v4.7.6 Latest"
+    v: "v6.3.9"
 };
 
 function notification(text, duration) {
@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
             voteIcon.src = "./images/vote.svg";
             voteLabel.style.color = "#D9D9D9";
             if (actions.saved == false) {
-                notification("The Party Saved!", 3500);
+                notification("The Party Saved!", 4500);
                 actions.saved = true;
             }
         } else if (parseInt(localStorage.getItem(`${project.id}_vote`)) < 25) {
